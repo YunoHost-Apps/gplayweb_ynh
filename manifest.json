@@ -1,0 +1,55 @@
+{
+    "name": "GPlayWeb",
+    "id": "gplayweb",
+    "description": {
+        "en": "A GPlayCli web interface",
+        "fr": "Une interface web pour GPlayCli"
+    },
+    "developer": {
+        "name": "matlink",
+        "email": "matlink@matlink.fr",
+        "url": "https://github.com/matlink/gplayweb"
+    },
+    "multi_instance": "false",
+    "arguments": {
+        "install" : [
+            {
+                "name": "domain",
+                "type": "domain",
+                "ask": {
+                    "en": "Choose a domain for gplayweb",
+                    "fr": "Choisissez un domaine pour gplayweb"
+                },
+                "example": "domain.org"
+            },
+            {
+                "name": "path",
+                "type": "path",
+                "ask": {
+                    "en": "Choose a path for gplayweb",
+                    "fr": "Choisissez un chemin pour gplayweb"
+                },
+                "example": "/gplayweb",
+                "default": "/gplayweb"
+            },
+            {
+                "name": "admin",
+                "type": "user",
+                "ask": {
+                    "en": "Choose an admin user for gplayweb",
+                    "fr": "Choisissez un administrateur pour gplayweb"
+                },
+                "example": "homer"
+            },
+            {
+                "name": "public_site",
+                "ask": {
+                    "en": "Should this application be public ?",
+                    "fr": "Est-ce que cette application doit être visible publiquement ?"
+                },
+                "choices": ["Yes", "No"],
+                "default": "No"
+            }
+        ]
+    }
+}

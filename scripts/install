@@ -1,0 +1,69 @@
+#! /bin/bash
+
+app=gplayweb
+
+#retrieve arguments
+domain=$1
+path=$2
+admin=$3
+password=$4
+is_public=$5
+
+port=8888
+
+# Remove trailing slash
+[ "$path" != "/" ] && path=${path%/}
+
+# Check domain/path availability
+sudo yunohost app checkurl $domain$path -a $app
+if [[ ! $? -eq 0 ]]; then
+  exit 1
+fi
+
+# Check user
+sudo yunohost user list --json | grep -q "\"username\": \"$admin\""
+if [[ ! $? -eq 0 ]]; then
+  echo "Wrong user"
+  exit 1
+fi
+
+# Save app settings
+sudo yunohost app setting $app admin -v "$admin"
+sudo yunohost app setting $app is_public -v "$is_public"
+sudo yunohost app setting $app domain -v "$domain"
+sudo yunohost app setting $app path -v "$path"
+
+# Install gplaycli
+sudo apt-get update -qq
+sudo apt-get install python-dev libffi-dev python-pip -y
+sudo pip install six --upgrade
+sudo pip install gplaycli
+# Update all dependencies
+sudo pip install gplaycli --upgrade
+
+# Install gplayweb
+sudo pip install gplayweb
+# Update all dependencies
+sudo pip install gplayweb --upgrade
+sudo cp ../conf/gplayweb.conf /etc/gplayweb/gplayweb.conf
+sudo sed -i "s/YNH_PORT/$port/g" /etc/gplayweb/gplayweb.conf
+sudo mkdir -p /opt/gplayweb/repo
+
+#configure nginx settings
+folder_path=${path%/}
+sudo sed -i "s@YNH_EXAMPLE_PATH@$path@g" ../conf/nginx.conf
+sudo sed -i "s@YNH_PORT@$port@g" ../conf/nginx.conf
+sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
+
+# If app is private, remove url to SSOWat conf from skipped_uris
+if [ "$is_public" = "No" ];
+then
+  sudo yunohost app setting $app unprotected_uris -d
+fi
+
+#adding admin to the allowed users
+sudo yunohost app addaccess $app -u $admin
+
+# Restart services
+sudo service nginx reload
+sudo yunohost app ssowatconf
