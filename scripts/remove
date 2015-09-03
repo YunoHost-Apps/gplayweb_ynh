@@ -7,6 +7,7 @@ sudo service gplayweb stop
 sudo pip uninstall gplayweb -y
 sudo rm -rf /etc/gplayweb /usr/share/gplayweb 
 sudo rm -rf /etc/nginx/conf.d/$domain.d/$app.conf
+sudo rm -f /tmp/.cache-gplayweb
 
 sudo nginx -s reload
 sudo yunohost app ssowatconf
