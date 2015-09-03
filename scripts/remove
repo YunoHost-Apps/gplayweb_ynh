@@ -1,6 +1,12 @@
 #! /bin/bash
 
-app=pluxml
+app=gplayweb
+domain=$(sudo yunohost app setting $app domain)
 
-sudo rm -rf /var/www/$app
-sudo rm -f /etc/nginx/conf.d/$domain.d/$app.conf
+sudo service gplayweb stop
+sudo pip uninstall gplayweb -y
+sudo rm -rf /etc/gplayweb /usr/share/gplayweb 
+sudo rm -rf /etc/nginx/conf.d/$domain.d/$app.conf
+
+sudo nginx -s reload
+sudo yunohost app ssowatconf
