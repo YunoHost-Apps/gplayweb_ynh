@@ -3,13 +3,19 @@
 app=gplayweb
 domain=$(sudo yunohost app setting $app domain)
 
-sudo service gplayweb sto
+sudo service gplayweb stop
 sudo rm -Rf /opt/yunohost/gplayweb
 sudo rm -rf /etc/gplayweb /usr/share/gplayweb 
 sudo rm -rf /etc/nginx/conf.d/$domain.d/$app.conf
 sudo rm -f /tmp/.cache-gplayweb
 
+sudo systemctl disable gplayweb.service
+
+sudo rm /lib/systemd/system/gplayweb.service
 sudo deluser gplayweb
+
+
+
 
 sudo nginx -s reload
 sudo yunohost app ssowatconf
