@@ -63,7 +63,7 @@ fi
 
 # Install gplaycli
 sudo apt-get update -qq
-sudo apt-get install python-dev libffi-dev python-pip python-virtualenv -y
+sudo apt-get install python-dev libffi-dev python-pip python-virtualenv fdroidserver -y
 #sudo virtualenv $final_path
 sudo virtualenv --system-site-packages $final_path
 sudo bash -c "source $final_path/bin/activate && pip install -r ../conf/requirements.txt"
@@ -86,6 +86,7 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
 
 # If app is private, remove url to SSOWat conf from skipped_uris
 [ "$is_public" = "No" ] && sudo yunohost app setting $app unprotected_uris -d
+sudo yunohost app setting $app skipped_uris -v /repo
 
 # Fix bug ssl and requests
 sudo sed -i 's/^ssl_verify\=True/ssl_verify\=\"\/etc\/ssl\/certs\/ca-certificates\.crt\"/g' /opt/yunohost/gplayweb/local/lib/python2.7/site-packages/ext_libs/googleplay_api/googleplay.py
