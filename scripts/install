@@ -29,25 +29,30 @@ while [[ ! $? -eq 0 ]]; do
 	sudo yunohost app checkport $port
 done
 
+final_path=/opt/yunohost/gplayweb
+
 # Save app settings
 sudo yunohost app setting $app admin -v "$admin"
 sudo yunohost app setting $app is_public -v "$is_public"
 sudo yunohost app setting $app domain -v "$domain"
 sudo yunohost app setting $app path -v "$path"
 
+# Init virtualenv
+if [ ! -d $final_path ];
+then
+        sudo mkdir -p $final_path
+fi
+
 # Install gplaycli
 sudo apt-get update -qq
-sudo apt-get install python-dev libffi-dev python-pip -y
-sudo pip install six --upgrade
-sudo pip install gplaycli
-# Update all dependencies
-sudo pip install gplaycli --upgrade
+sudo apt-get install python-dev libffi-dev python-pip python-virtualenv -y
+sudo virtualenv $final_path
+#sudo virtualenv --system-site-packages $final_path
+sudo bash -c "source $final_path/bin/activate && pip install -r ../conf/requirements.txt"
+
 
 # Install gplayweb
-sudo pip install gplayweb
-# Update all dependencies
-sudo pip install gplayweb --upgrade
-sudo mkdir /etc/gplayweb
+sudo bash -c "source $final_path/bin/activate && pip install gplayweb --upgrade"
 sudo cp ../conf/gplayweb.conf /etc/gplayweb/gplayweb.conf
 sudo sed -i "s/YNH_PORT/$port/g" /etc/gplayweb/gplayweb.conf
 sudo sed -i "s@YNH_EXAMPLE_PATH@$path@g" /etc/gplayweb/gplayweb.conf
@@ -63,10 +68,14 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
 # If app is private, remove url to SSOWat conf from skipped_uris
 [ "$is_public" = "No" ] && sudo yunohost app setting $app unprotected_uris -d
 
+# Systemd
+sudo cp ../conf/gplayweb.service /lib/systemd/system/
+sudo systemctl enable gplayweb.service
+sudo systemctl start gplayweb.service
+
 #adding admin to the allowed users
 sudo yunohost app addaccess $app -u $admin
 
 # Restart services
 sudo service nginx reload
 sudo yunohost app ssowatconf
-sudo service gplayweb start
