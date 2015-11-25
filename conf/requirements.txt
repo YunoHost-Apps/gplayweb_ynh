@@ -1,2 +1,3 @@
 six
+setuptools_ext
 gplaycli
