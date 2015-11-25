@@ -88,7 +88,7 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
 [ "$is_public" = "No" ] && sudo yunohost app setting $app unprotected_uris -d
 
 # Fix bug ssl and requests
-sudo sed -i 's/^ssl_verify=True/ssl_verify="/etc/ssl/certs/ca-certificates.crt"/g' /opt/yunohost/gplayweb/local/lib/python2.7/site-packages/ext_libs/googleplay_api/googleplay.py
+sudo sed -i 's/^ssl_verify\=True/ssl_verify\=\"\/etc\/ssl\/certs\/ca-certificates\.crt\"/g' /opt/yunohost/gplayweb/local/lib/python2.7/site-packages/ext_libs/googleplay_api/googleplay.py
 
 # Systemd
 sudo cp ../conf/gplayweb.service /lib/systemd/system/
