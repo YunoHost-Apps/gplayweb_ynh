@@ -78,9 +78,8 @@ sudo sed -i "s@YNH_EXAMPLE_PATH@$path@g" /etc/gplayweb/gplayweb.conf
 
 sudo adduser gplayweb --disabled-password --gecos ""
 sudo mkdir -p /var/www/gplayweb/repo
-sudo chown gplayweb. /var/www/gplayweb
+sudo chown gplayweb. /var/www/gplayweb -R
 sudo su - gplayweb -c "cd /var/www/gplayweb/ && fdroid init" 
-
 
 #configure nginx settings
 folder_path=${path%/}
@@ -92,8 +91,8 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
 [ "$is_public" = "No" ] && sudo yunohost app setting $app unprotected_uris -d
 sudo yunohost app setting $app skipped_uris -v /repo
 
-# Fix bug ssl and requests
-sudo sed -i 's/^ssl_verify\=True/ssl_verify\=\"\/etc\/ssl\/certs\/ca-certificates\.crt\"/g' /opt/yunohost/gplayweb/local/lib/python2.7/site-packages/ext_libs/googleplay_api/googleplay.py
+# Fix bug ssl and system request for fdroid
+sudo patch -p0 < ../conf/gplayweb.diff
 
 # Systemd
 sudo cp ../conf/gplayweb.service /lib/systemd/system/
