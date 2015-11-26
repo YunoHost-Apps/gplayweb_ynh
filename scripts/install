@@ -76,7 +76,7 @@ sudo cp ../conf/gplayweb.conf /etc/gplayweb/gplayweb.conf
 sudo sed -i "s/YNH_PORT/$port/g" /etc/gplayweb/gplayweb.conf
 sudo sed -i "s@YNH_EXAMPLE_PATH@$path@g" /etc/gplayweb/gplayweb.conf
 
-sudo adduser gplayweb --home /var/www/gplayweb/ --disabled-password --gecos ""
+sudo adduser gplayweb --disabled-password --gecos ""
 sudo mkdir -p /var/www/gplayweb/repo
 sudo chown gplayweb. /var/www/gplayweb/repo
 sudo su - gplayweb -c "cd /opt/gplayweb/ && fdroid init" 
