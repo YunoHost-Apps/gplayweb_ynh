@@ -1,0 +1,4 @@
+CREDENTIALS=/etc/gplaycli/credentials.conf
+FOLDER_TO_UPDATE=/var/www/gplayweb/repo
+
+gplaycli --config "$CREDENTIALS" --update "$FOLDER_TO_UPDATE"
