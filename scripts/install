@@ -92,7 +92,8 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
 sudo yunohost app setting $app skipped_uris -v /repo
 
 # Fix bug ssl and system request for fdroid
-sudo patch -p1 -i ../conf/gplayweb.diff
+sudo patch /opt/yunohost/gplayweb/local/bin/gplayweb ../conf/gplayweb.diff
+sudo patch /opt/yunohost/gplayweb/local/lib/python2.7/site-packages/ext_libs/googleplay_api/googleplay.py ../conf/googleplay.diff
 
 # Systemd
 sudo cp ../conf/gplayweb.service /lib/systemd/system/
