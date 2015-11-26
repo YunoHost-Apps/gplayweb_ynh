@@ -107,5 +107,6 @@ sudo yunohost app addaccess $app -u $admin
 
 # Restart services
 sudo service nginx reload
-sudo yunohost app ssowatconf
 sudo yunohost app setting $app skipped_uris -v "/repo"
+sudo yunohost app ssowatconf
+
