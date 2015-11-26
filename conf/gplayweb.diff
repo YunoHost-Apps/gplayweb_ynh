@@ -1,0 +1,40 @@
+*** /opt/yunohost/gplayweb/local/bin/gplayweb	2015-11-26 04:45:29.036021501 -0500
+--- gplayweb.new	2015-11-26 04:21:01.327697184 -0500
+***************
+*** 169,177 ****
+  		os.chdir(self.fdroid_repo_dir)
+  		# We update fdroidserver repo
+  		try:
+! 			self.fdroid_update.create_metadata_and_update()
+! 			self.customize_metadata()
+! 			self.fdroid_update.create_metadata_and_update()
+  		except:
+  			traceback.print_exc(file=sys.stdout)
+  		# We return to our original path
+--- 169,175 ----
+  		os.chdir(self.fdroid_repo_dir)
+  		# We update fdroidserver repo
+  		try:
+! 			os.system('fdroid update -c')
+  		except:
+  			traceback.print_exc(file=sys.stdout)
+  		# We return to our original path
+*** /opt/yunohost/gplayweb/local/lib/python2.7/site-packages/ext_libs/googleplay_api/googleplay.py	2015-11-26 04:47:36.784043973 -0500
+--- googleplay.new	2015-11-26 04:22:14.635714799 -0500
+***************
+*** 14,20 ****
+  import googleplay_pb2
+  import config
+  
+! ssl_verify=True
+  class LoginError(Exception):
+      def __init__(self, value):
+          self.value = value
+--- 14,20 ----
+  import googleplay_pb2
+  import config
+  
+! ssl_verify="/etc/ssl/certs/ca-certificates.crt"
+  class LoginError(Exception):
+      def __init__(self, value):
+          self.value = value
