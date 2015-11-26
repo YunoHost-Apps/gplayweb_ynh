@@ -78,7 +78,7 @@ sudo sed -i "s@YNH_EXAMPLE_PATH@$path@g" /etc/gplayweb/gplayweb.conf
 
 sudo adduser gplayweb --disabled-password --gecos ""
 sudo mkdir -p /var/www/gplayweb/repo
-sudo chown gplayweb. /var/www/gplayweb/repo
+sudo chown gplayweb. /var/www/gplayweb
 sudo su - gplayweb -c "cd /var/www/gplayweb/ && fdroid init" 
 
 
