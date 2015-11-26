@@ -1,6 +1,6 @@
 #! /bin/bash
 
-app=gplayweb
+app="gplayweb"
 
 #retrieve arguments
 domain=$1
