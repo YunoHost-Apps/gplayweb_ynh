@@ -8,6 +8,8 @@ ExecStart=/opt/yunohost/gplayweb/bin/gplayweb
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
+User=gplayweb
+Group=gplayweb
 
 [Install]
 WantedBy=multi-user.target

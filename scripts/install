@@ -81,7 +81,9 @@ sudo mkdir -p /var/www/gplayweb/repo
 sudo chown gplayweb. /var/www/gplayweb -R
 sudo su - gplayweb -c "cd /var/www/gplayweb/ && fdroid init" 
 sudo su - gplayweb -c "cd /var/www/gplayweb/ && fdroid update -c; fdroid update"
-
+sudo touch /tmp/.cache-gplayweb
+sudo chown gplayweb. /tmp/.cache-gplayweb
+sudo chown gplayweb. /var/www/gplayweb -R
 
 #configure nginx settings
 folder_path=${path%/}
