@@ -11,6 +11,8 @@ sudo rm -rf /var/www/gplayweb
 sudo rm -rf /etc/nginx/conf.d/$domain.d/$app.conf
 sudo rm -f /tmp/.cache-gplayweb
 
+sudo rm /etc/cron.daily/gplaycli
+
 sudo systemctl disable gplayweb.service
 
 sudo rm /lib/systemd/system/gplayweb.service
