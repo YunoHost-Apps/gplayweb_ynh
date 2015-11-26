@@ -96,8 +96,7 @@ sudo patch /opt/yunohost/gplayweb/local/bin/gplayweb ../conf/gplayweb.diff
 sudo patch /opt/yunohost/gplayweb/local/lib/python2.7/site-packages/ext_libs/googleplay_api/googleplay.py ../conf/googleplay.diff
 
 # Install Crontab
-sudo bash -c "source $final_path/bin/activate && gplaycli -ic"
-
+sudo cp ../conf/crontab /etc/cron.daily/gplaycli
 
 # Systemd
 sudo cp ../conf/gplayweb.service /lib/systemd/system/
