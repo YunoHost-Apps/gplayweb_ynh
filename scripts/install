@@ -95,6 +95,10 @@ sudo yunohost app setting $app skipped_uris -v /repo
 sudo patch /opt/yunohost/gplayweb/local/bin/gplayweb ../conf/gplayweb.diff
 sudo patch /opt/yunohost/gplayweb/local/lib/python2.7/site-packages/ext_libs/googleplay_api/googleplay.py ../conf/googleplay.diff
 
+# Install Crontab
+sudo bash -c "source $final_path/bin/activate && gplaycli -ic"
+
+
 # Systemd
 sudo cp ../conf/gplayweb.service /lib/systemd/system/
 sudo systemctl enable gplayweb.service
