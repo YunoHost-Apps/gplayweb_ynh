@@ -89,7 +89,7 @@ sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
 
 # If app is private, remove url to SSOWat conf from skipped_uris
 [ "$is_public" = "No" ] && sudo yunohost app setting $app unprotected_uris -d
-sudo yunohost app setting $app skipped_uris -v /repo
+sudo yunohost app setting $app skipped_uris -v repo
 
 # Fix bug ssl and system request for fdroid
 sudo patch /opt/yunohost/gplayweb/local/bin/gplayweb ../conf/gplayweb.diff
