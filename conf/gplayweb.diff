@@ -1,0 +1,13 @@
+--- /opt/yunohost/gplayweb/local/bin/gplayweb	2015-11-26 04:55:42.000000000 -0500
++++ gplayweb.new	2015-11-26 04:21:01.327697184 -0500
+@@ -169,9 +169,7 @@
+ 		os.chdir(self.fdroid_repo_dir)
+ 		# We update fdroidserver repo
+ 		try:
+-			self.fdroid_update.create_metadata_and_update()
+-			self.customize_metadata()
+-			self.fdroid_update.create_metadata_and_update()
++			os.system('fdroid update -c')
+ 		except:
+ 			traceback.print_exc(file=sys.stdout)
+ 		# We return to our original path
