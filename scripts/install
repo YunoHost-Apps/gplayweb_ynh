@@ -35,7 +35,7 @@ final_path=/opt/yunohost/gplayweb
 sudo yunohost app setting $app admin -v "$admin"
 sudo yunohost app setting $app is_public -v "$is_public"
 #sudo yunohost app setting $app domain -v "$domain"
-sudo yunohost app setting $app path -v "$path"
+#sudo yunohost app setting $app path -v "$path"
 
 # Check Swap
 if [ $(sudo swapon -s | wc -l) = 1 ];
@@ -80,10 +80,13 @@ sudo adduser gplayweb --disabled-password --gecos ""
 sudo mkdir -p /var/www/gplayweb/repo
 sudo chown gplayweb. /var/www/gplayweb -R
 sudo su - gplayweb -c "cd /var/www/gplayweb/ && fdroid init" 
+sudo su - gplayweb -c "cd /var/www/gplayweb/ && fdroid update -c; fdroid update"
+
 
 #configure nginx settings
 folder_path=${path%/}
 sudo sed -i "s@YNH_EXAMPLE_PATH@$path@g" ../conf/nginx.conf
+sudo sed -i "s@YNH_EXAMPLE_DOMAIN@$domain@g" ../conf/nginx.conf
 sudo sed -i "s@YNH_PORT@$port@g" ../conf/nginx.conf
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
 
@@ -104,6 +107,8 @@ sudo systemctl start gplayweb.service
 
 #adding admin to the allowed users
 sudo yunohost app addaccess $app -u $admin
+
+
 
 # Restart services
 sudo service nginx reload
