@@ -63,7 +63,7 @@ fi
 
 # Install gplaycli
 sudo apt-get update -qq
-sudo apt-get install python-dev libffi-dev python-pip python-virtualenv fdroidserver -y
+sudo apt-get install python-dev libffi-dev python-pip python-virtualenv fdroidserver android-libhost-dev -y
 #sudo virtualenv $final_path
 sudo virtualenv --system-site-packages $final_path
 sudo bash -c "source $final_path/bin/activate && pip install -r ../conf/requirements.txt"
