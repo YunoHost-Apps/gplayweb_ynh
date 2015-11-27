@@ -87,8 +87,9 @@ sudo chown gplayweb. /var/www/gplayweb -R
 
 #configure nginx settings
 folder_path=${path%/}
+url=url=${domain}${path}
 sudo sed -i "s@YNH_EXAMPLE_PATH@$path@g" ../conf/nginx.conf
-sudo sed -i "s@YNH_EXAMPLE_DOMAIN@$domain@g" ../conf/nginx.conf
+sudo sed -i "s@YNH_EXAMPLE_DOMAIN@$url@g" ../conf/nginx.conf
 sudo sed -i "s@YNH_PORT@$port@g" ../conf/nginx.conf
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
 
