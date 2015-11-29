@@ -1,4 +1,5 @@
 CREDENTIALS=/etc/gplaycli/credentials.conf
 FOLDER_TO_UPDATE=/var/www/gplayweb/repo
 
-gplaycli --config "$CREDENTIALS" --update "$FOLDER_TO_UPDATE"
+su - gplayweb -c 'gplaycli --config "$CREDENTIALS" --update "$FOLDER_TO_UPDATE"'
+su - gplayweb -c 'cd /var/www/gplayweb && fdroid update -c'
